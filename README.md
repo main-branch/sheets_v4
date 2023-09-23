@@ -9,12 +9,32 @@
 
 Unofficial helpers for the Google Sheets V4 API
 
-- [SheetsV4](#sheetsv4)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Development](#development)
-  - [Contributing](#contributing)
-  - [License](#license)
+* [Important Links for Programming Google Sheets](#important-links-for-programming-google-sheets)
+  * [General API Documentation](#general-api-documentation)
+  * [Ruby Implementation of the Sheets API](#ruby-implementation-of-the-sheets-api)
+  * [Other Links](#other-links)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Development](#development)
+* [Contributing](#contributing)
+* [License](#license)
+
+## Important Links for Programming Google Sheets
+
+### General API Documentation
+
+* [Google Sheets API Overview](https://developers.google.com/sheets/api/guides/concepts)
+* [Google Sheets API Reference](https://developers.google.com/sheets/api/reference/rest)
+* [Batch Update Requests](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request)
+
+### Ruby Implementation of the Sheets API
+
+* [SheetsService Class](https://github.com/googleapis/google-api-ruby-client/blob/main/generated/google-apis-sheets_v4/lib/google/apis/sheets_v4/service.rb)
+* [All Other Sheets Classes](https://github.com/googleapis/google-api-ruby-client/blob/main/generated/google-apis-sheets_v4/lib/google/apis/sheets_v4/classes.rb)
+
+### Other Links
+
+* [Apps Script for Sheets](https://developers.google.com/apps-script/guides/sheets)
 
 ## Installation
 
