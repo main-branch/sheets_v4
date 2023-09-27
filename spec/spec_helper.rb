@@ -20,6 +20,47 @@ require 'json'
 
 SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::LcovFormatter]
 
+# Return `true` if the environment variable is set to a truthy value
+#
+# @example
+#   env_true?('COV_SHOW_UNCOVERED')
+#
+# @param name [String] the name of the environment variable
+# @return [Boolean]
+#
+def env_true?(name)
+  value = ENV.fetch(name, '').downcase
+  %w[yes on true 1].include?(value)
+end
+
+# Return `true` if the environment variable is NOT set to a truthy value
+#
+# @example
+#   env_false?('COV_NO_FAIL')
+#
+# @param name [String] the name of the environment variable
+# @return [Boolean]
+#
+def env_false?(name)
+  !env_true?(name)
+end
+
+# Return `true` if the the test run should fail if the coverage is below the threshold
+#
+# @return [Boolean]
+#
+def fail_on_low_coverage?
+  !(RSpec.configuration.dry_run? || env_true?('COV_NO_FAIL'))
+end
+
+# Return `true` if the the test run should show the lines not covered by tests
+#
+# @return [Boolean]
+#
+def show_lines_not_covered?
+  env_true?('COV_SHOW_UNCOVERED')
+end
+
 # Report if the test coverage was below the configured threshold
 #
 # The threshold is configured by setting the `test_coverage_threshold` variable
