@@ -48,7 +48,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_runtime_dependency 'activesupport', '~> 7.0'
+  spec.add_development_dependency 'github_pages_rake_tasks', '~> 0.1'
   spec.add_runtime_dependency 'google-apis-sheets_v4', '~> 0.26'
   spec.add_runtime_dependency 'googleauth'
+  spec.add_runtime_dependency 'json_schemer', '~> 2.0'
   spec.add_runtime_dependency 'rltk', '~> 3.0'
 end
