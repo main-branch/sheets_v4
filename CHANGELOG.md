@@ -4,6 +4,16 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.2.0 (2023-09-26)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.1.1..v0.2.0)
+
+Changes since v0.1.1:
+
+* 489ff50 Add SheetsV4.validate_api_object (#6)
+* b44eba4 List all examples that should be created (#5)
+* 2edd688 Add links to Google Sheets documentation to the README.md (#4)
+
 ## v0.1.1 (2023-09-22)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.1.0..v0.1.1)
