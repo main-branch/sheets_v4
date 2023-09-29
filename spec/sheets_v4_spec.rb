@@ -73,4 +73,12 @@ RSpec.describe SheetsV4 do
       expect(described_class.api_object_schemas['LocationSchema']).to eq(expected_schema)
     end
   end
+
+  describe '.color' do
+    it 'should return the color object for the given name' do
+      SheetsV4::COLORS.each_key do |color_name|
+        expect(described_class.color(color_name)).to eq(SheetsV4::COLORS[color_name])
+      end
+    end
+  end
 end
