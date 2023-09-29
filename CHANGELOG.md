@@ -4,6 +4,14 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.3.0 (2023-09-28)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.2.0..v0.3.0)
+
+Changes since v0.2.0:
+
+* 0fb4579 Add predefined color objects (#8)
+
 ## v0.2.0 (2023-09-26)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.1.1..v0.2.0)
