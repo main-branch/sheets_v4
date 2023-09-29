@@ -16,6 +16,7 @@ Unofficial helpers for the Google Sheets V4 API
 * [Installation](#installation)
 * [Usage](#usage)
 * [Development](#development)
+* [Creating a Google API Service Account](#creating-a-google-api-service-account)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -23,7 +24,7 @@ Unofficial helpers for the Google Sheets V4 API
 
 ### General API Documentation
 
-* [Google Sheets API Overview](https://developers.google.com/sheets/api/guides/concepts)
+* [Google Sheets API Overview](https://developers.google.com/sheets/api)
 * [Google Sheets API Reference](https://developers.google.com/sheets/api/reference/rest)
 * [Batch Update Requests](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request)
 
@@ -65,6 +66,9 @@ release a new version, update the version number in `version.rb`, and then run
 `bundle exec rake release`, which will create a git tag for the version, push git
 commits and the created tag, and push the `.gem` file to
 [rubygems.org](https://rubygems.org).
+
+## Creating a Google API Service Account
+
 
 ## Contributing
 

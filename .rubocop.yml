@@ -23,6 +23,9 @@ Metrics/BlockLength:
     - "spec/**/*_spec.rb"
     - "*.gemspec"
 
+Metrics/ModuleLength:
+  CountAsOne: ['hash']
+
 # When writing minitest tests, it is very hard to limit test class length:
 Metrics/ClassLength:
   Exclude:
