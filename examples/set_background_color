@@ -4,19 +4,16 @@
 require 'sheets_v4'
 require 'googleauth'
 
-# Initialize the API
+# Example to show using the SheetsV4 module to set the background color of a cell
+#
+# GIVEN the credential file is at ~/.google-api-credential.json
+#   AND the spreadsheet id is 18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY
+#   AND the spreadsheet has a sheet whose id is 0
+# WHEN the script is run
+# THEN the sheet whose id is 0 will have the background color names starting at A2
+#   AND the background color of the cells in column B will be set to the color matching the color name in column A
 
-sheets_service = Google::Apis::SheetsV4::SheetsService.new
-credential = File.open(File.expand_path('~/google-api-examples-credential.json')) do |credential_source|
-  scopes = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
-  options = { json_key_io: credential_source, scope: scopes }
-  Google::Auth::DefaultCredentials.make_creds(options).tap(&:fetch_access_token)
-end
-sheets_service.authorization = credential
-
-# Get the spreadsheet
-
-spreadsheet_id = '18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY'
+# Build the requests
 
 def name_rows
   SheetsV4.color_names.map do |color_name|
@@ -44,11 +41,12 @@ def set_background_colors
   { update_cells: { rows:, fields:, start: } }
 end
 
-request = { requests: [write_names, set_background_colors] }
+def requests = { requests: [write_names, set_background_colors] }
 
 # SheetsV4.validate_api_object(
 #   schema_name: 'BatchUpdateSpreadsheetRequest', object: request,
 #   logger: Logger.new(STDOUT, level: Logger::ERROR)
 # )
 
-sheets_service.batch_update_spreadsheet(spreadsheet_id, request)
+spreadsheet_id = '18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY'
+SheetsV4.sheets_service.batch_update_spreadsheet(spreadsheet_id, requests)

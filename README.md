@@ -15,6 +15,7 @@ Unofficial helpers for the Google Sheets V4 API
   * [Other Links](#other-links)
 * [Installation](#installation)
 * [Usage](#usage)
+  * [Obtaining an authenticated SheetsService](#obtaining-an-authenticated-sheetsservice)
   * [Colors](#colors)
 * [Development](#development)
 * [Creating a Google API Service Account](#creating-a-google-api-service-account)
@@ -56,6 +57,47 @@ gem install sheets_v4
 ## Usage
 
 [Detailed API documenation](https://rubydoc.info/gems/sheets_v4/) is hosted on rubygems.org.
+
+### Obtaining an authenticated SheetsService
+
+Typically, to construct an authenticated SheetsService object where the credential
+is read from a file, the following code is required:
+
+```Ruby
+sheets_service = Google::Apis::SheetsV4::SheetsService.new
+credential = File.read(File.expand_path('~/google-api-credential.json')) do |credential_source|
+  scopes = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
+  options = { json_key_io: credential_source, scope: scopes }
+  Google::Auth::DefaultCredentials.make_creds(options).tap(&:fetch_access_token)
+end
+sheets_service.authorization = credential
+```
+
+The `SheetsV4.sheets_service` method simplifies this a bit.
+
+By default, the credential is read from `~/.google-api-credential.json`. In that case,
+an authenticated SheetsService object can be obtained with one method call:
+
+```Ruby
+sheets_service = SheetsV4.sheets_service
+```
+
+If the credential is stored elsewhere, pass the credential_source to `SheetsV4.sheets_service`
+manually. `credential_source` can be a String:
+
+```Ruby
+sheets_service = SheetsV4.sheets_service(credential_sourvce: File.read('credential.json'))
+```
+
+an IO object:
+
+```Ruby
+sheets_service = File.open('credential.json') do |credential_source|
+  SheetsV4.sheets_service(credential_sourvce:)
+end
+```
+
+or an already constructed `Google::Auth::*`` object.
 
 ### Colors
 
