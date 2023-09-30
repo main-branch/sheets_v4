@@ -28,6 +28,7 @@ Metrics/ModuleLength:
 
 # When writing minitest tests, it is very hard to limit test class length:
 Metrics/ClassLength:
+  CountAsOne: ['hash']
   Exclude:
     - "test/**/*_test.rb"
 

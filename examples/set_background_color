@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'sheets_v4'
+require 'googleauth'
+
+# Initialize the API
+
+sheets_service = Google::Apis::SheetsV4::SheetsService.new
+credential = File.open(File.expand_path('~/google-api-examples-credential.json')) do |credential_source|
+  scopes = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
+  options = { json_key_io: credential_source, scope: scopes }
+  Google::Auth::DefaultCredentials.make_creds(options).tap(&:fetch_access_token)
+end
+sheets_service.authorization = credential
+
+# Get the spreadsheet
+
+spreadsheet_id = '18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY'
+
+def name_rows
+  SheetsV4.color_names.map do |color_name|
+    { values: [{ user_entered_value: { string_value: color_name.to_s } }] }
+  end
+end
+
+def write_names
+  rows = name_rows
+  fields = 'user_entered_value'
+  start = { sheet_id: 0, row_index: 1, column_index: 0 }
+  { update_cells: { rows:, fields:, start: } }
+end
+
+def background_color_rows
+  SheetsV4.color_names.map { |color_name| SheetsV4.color(color_name) }.map do |color|
+    { values: [{ user_entered_format: { background_color: color } }] }
+  end
+end
+
+def set_background_colors
+  rows = background_color_rows
+  fields = 'user_entered_format'
+  start = { sheet_id: 0, row_index: 1, column_index: 1 }
+  { update_cells: { rows:, fields:, start: } }
+end
+
+request = { requests: [write_names, set_background_colors] }
+
+# SheetsV4.validate_api_object(
+#   schema_name: 'BatchUpdateSpreadsheetRequest', object: request,
+#   logger: Logger.new(STDOUT, level: Logger::ERROR)
+# )
+
+sheets_service.batch_update_spreadsheet(spreadsheet_id, request)
