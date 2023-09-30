@@ -3,6 +3,7 @@
 * [ ] Creating a Google API service account [1](https://www.youtube.com/watch?v=sAgWCbGMzTo&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1&index=1)
 [2](https://www.youtube.com/watch?v=sVURhxyc6jE&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1&index=43)
 * [ ] Create a SheetsService instance
+* [X] Set background color
 * [ ] Creating Google Sheets files [1](https://www.youtube.com/watch?v=JRUxeQ6ZCy0&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1&index=2)
 * [ ] Writing data to a sheet [1](https://www.youtube.com/watch?v=YF7Ad-7pvks&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1&index=3)
 * [ ] Reading data from a sheet [1](https://www.youtube.com/watch?v=gkglr8GID5E&list=PL3JVwFmb_BnSee8RFaRPZ3nykuMRlaQp1&index=4)

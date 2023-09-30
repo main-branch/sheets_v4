@@ -58,22 +58,6 @@ RSpec.describe SheetsV4 do
     end
   end
 
-  describe '.self.api_object_schemas' do
-    it 'should return the schemas from the Google Discovery API for Sheets V4' do
-      expect(described_class.api_object_schemas).to have_attributes(keys: %w[PersonSchema LocationSchema])
-    end
-
-    it 'should return the PersonSchema adding the unevaluatedProperties=false property' do
-      expected_schema = schemas['PersonSchema'].merge('unevaluatedProperties' => false)
-      expect(described_class.api_object_schemas['PersonSchema']).to eq(expected_schema)
-    end
-
-    it 'should return the LocationSchema adding the unevaluatedProperties=false property' do
-      expected_schema = schemas['LocationSchema'].merge('unevaluatedProperties' => false)
-      expect(described_class.api_object_schemas['LocationSchema']).to eq(expected_schema)
-    end
-  end
-
   describe '.color' do
     it 'should return the color object for the given name' do
       SheetsV4::Color::COLORS.each_key do |color_name|

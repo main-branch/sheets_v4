@@ -36,46 +36,6 @@ module SheetsV4
     ValidateApiObject.new(logger).call(schema_name, object)
   end
 
-  # A hash of schemas keyed by the schema name loaded from the Google Discovery API
-  #
-  # @example
-  #   SheetsV4.api_object_schemas #=> { 'PersonSchema' => { 'type' => 'object', ... } ... }
-  #
-  # @return [Hash<String, Object>] a hash of schemas keyed by schema name
-  #
-  def self.api_object_schemas
-    schema_load_semaphore.synchronize { @api_object_schemas ||= load_api_object_schemas }
-  end
-
-  # Validate
-  # A mutex used to synchronize access to the schemas so they are only loaded
-  # once.
-  #
-  @schema_load_semaphore = Thread::Mutex.new
-
-  # A mutex used to synchronize access to the schemas so they are only loaded once
-  #
-  # @return [Thread::Mutex]
-  #
-  # @api private
-  #
-  def self.schema_load_semaphore = @schema_load_semaphore
-
-  # Load the schemas from the Google Discovery API
-  #
-  # @return [Hash<String, Object>] a hash of schemas keyed by schema name
-  #
-  # @api private
-  #
-  def self.load_api_object_schemas
-    source = 'https://sheets.googleapis.com/$discovery/rest?version=v4'
-    resp = Net::HTTP.get_response(URI.parse(source))
-    data = resp.body
-    JSON.parse(data)['schemas'].tap do |schemas|
-      schemas.each { |_name, schema| schema['unevaluatedProperties'] = false }
-    end
-  end
-
   # Given the name of the color, return a Google Sheets API color object
   #
   # Available color names are listed using `SheetsV4.color_names`.

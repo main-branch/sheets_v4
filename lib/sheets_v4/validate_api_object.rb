@@ -121,11 +121,53 @@ module SheetsV4
     def call(ref)
       schema_name = ref.path[1..]
       logger.debug { "Reading schema #{schema_name}" }
-      schema_object = SheetsV4.api_object_schemas[schema_name]
+      schema_object = self.class.api_object_schemas[schema_name]
       raise "Schema for #{ref} not found" unless schema_object
 
       schema_object.to_h.tap do |schema|
         schema['unevaluatedProperties'] = false
+      end
+    end
+
+    # A hash of schemas keyed by the schema name loaded from the Google Discovery API
+    #
+    # @example
+    #   SheetsV4.api_object_schemas #=> { 'PersonSchema' => { 'type' => 'object', ... } ... }
+    #
+    # @return [Hash<String, Object>] a hash of schemas keyed by schema name
+    #
+    def self.api_object_schemas
+      schema_load_semaphore.synchronize { @api_object_schemas ||= load_api_object_schemas }
+    end
+
+    # Validate
+    # A mutex used to synchronize access to the schemas so they are only loaded
+    # once.
+    #
+    @schema_load_semaphore = Thread::Mutex.new
+
+    class << self
+      # A mutex used to synchronize access to the schemas so they are only loaded once
+      #
+      # @return [Thread::Mutex]
+      #
+      # @api private
+      #
+      attr_reader :schema_load_semaphore
+    end
+
+    # Load the schemas from the Google Discovery API
+    #
+    # @return [Hash<String, Object>] a hash of schemas keyed by schema name
+    #
+    # @api private
+    #
+    def self.load_api_object_schemas
+      source = 'https://sheets.googleapis.com/$discovery/rest?version=v4'
+      resp = Net::HTTP.get_response(URI.parse(source))
+      data = resp.body
+      JSON.parse(data)['schemas'].tap do |schemas|
+        schemas.each { |_name, schema| schema['unevaluatedProperties'] = false }
       end
     end
   end
