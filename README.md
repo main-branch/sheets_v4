@@ -28,6 +28,7 @@ Unofficial helpers for the Google Sheets V4 API
 * [Google Sheets API Overview](https://developers.google.com/sheets/api)
 * [Google Sheets API Reference](https://developers.google.com/sheets/api/reference/rest)
 * [Batch Update Requests](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/request)
+* [Discovery Document for the Sheets API](https://sheets.googleapis.com/$discovery/rest?version=v4)
 
 ### Ruby Implementation of the Sheets API
 
