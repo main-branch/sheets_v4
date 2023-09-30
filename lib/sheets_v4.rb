@@ -2,6 +2,7 @@
 
 require_relative 'sheets_v4/version'
 require_relative 'sheets_v4/color'
+require_relative 'sheets_v4/credential_creator'
 require_relative 'sheets_v4/validate_api_object'
 
 require 'google/apis/sheets_v4'
@@ -14,6 +15,38 @@ require 'net/http'
 # @api public
 #
 module SheetsV4
+  # Create a new Google::Apis::SheetsV4::SheetsService object
+  #
+  # Simplifies creating and configuring a the credential.
+  #
+  # @example using the crednetial in `~/.google-api-credential`
+  #   SheetsV4.sheets_service
+  #
+  # @example using a credential passed in as a string
+  #   credential_source = File.read(File.join(Dir.home, '.credential'))
+  #   SheetsV4.sheets_service(credential_source:
+  #
+  # @param credential_source [nil, String, IO, Google::Auth::*] may
+  #   be either an already constructed credential, the credential read into a String or
+  #   an open file with the credential ready to be read. Passing `nil` will result
+  #   in the credential being read from `~/.google-api-credential.json`.
+  #
+  # @param scopes [Object, Array] one or more scopes to access.
+  #
+  # @param credential_creator [#credential] Used to inject the credential creator for
+  #   testing.
+  #
+  # @return a new SheetsService instance
+  #
+  def self.sheets_service(credential_source: nil, scopes: nil, credential_creator: SheetsV4::CredentialCreator)
+    credential_source ||= File.read(File.expand_path('~/.google-api-credential.json'))
+    scopes ||= [Google::Apis::SheetsV4::AUTH_SPREADSHEETS]
+
+    Google::Apis::SheetsV4::SheetsService.new.tap do |service|
+      service.authorization = credential_creator.call(credential_source, scopes)
+    end
+  end
+
   # Validate the object using the named JSON schema
   #
   # The JSON schemas are loaded from the Google Disocvery API. The schemas names are

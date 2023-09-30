@@ -8,6 +8,53 @@ RSpec.describe SheetsV4 do
     expect(SheetsV4::VERSION).not_to be nil
   end
 
+  describe '.sheets_service' do
+    subject { described_class.sheets_service(credential_source:, scopes:, credential_creator:) }
+    let(:credential_source) { double('credential_source') }
+    let(:scopes) { double('scopes') }
+    let(:credential_creator) { double('credential_creator') }
+    let(:credential) { double('credential') }
+    let(:expected_result) { double('expected_result') }
+
+    before do
+      allow(Google::Apis::SheetsV4::SheetsService).to receive(:new).and_return(expected_result)
+
+      expect(expected_result).to receive(:authorization=).with(credential)
+
+      allow(credential_creator).to(
+        receive(:call)
+        .with(credential_source, scopes)
+        .and_return(credential)
+      )
+    end
+
+    it 'should create a new Google::Apis::SheetsV4::SheetsService' do
+      expect(subject).to eq(expected_result)
+    end
+
+    context 'when credential_source is nil' do
+      let(:credential_source) { nil }
+      it 'should read the credential from ~/.google-api-credential.json' do
+        expect(File).to receive(:read).with(File.expand_path('~/.google-api-credential.json'))
+        expect(subject).to eq(expected_result)
+      end
+    end
+
+    context 'when scopes is nil' do
+      let(:scopes) { nil }
+      let(:expected_default_scopes) { [Google::Apis::SheetsV4::AUTH_SPREADSHEETS] }
+
+      it 'should use the default scopes' do
+        expect(credential_creator).to(
+          receive(:call)
+          .with(credential_source, expected_default_scopes)
+          .and_return(credential)
+        )
+        expect(subject).to eq(expected_result)
+      end
+    end
+  end
+
   let(:schemas) do
     {
       'PersonSchema' => {
@@ -27,8 +74,11 @@ RSpec.describe SheetsV4 do
       }
     }
   end
+
   let(:sheets_discovery_uri) { URI.parse('https://sheets.googleapis.com/$discovery/rest?version=v4') }
+
   let(:sheets_discovery_document) { double('sheets_discovery_document', body: JSON.generate('schemas' => schemas)) }
+
   before do
     allow(Net::HTTP).to(
       receive(:get_response)
