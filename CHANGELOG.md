@@ -4,6 +4,17 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.4.0 (2023-09-29)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.3.0..v0.4.0)
+
+Changes since v0.3.0:
+
+* 843c1b5 Add SheetsV4.sheets_service (#13)
+* 16a73f5 Refactor ValidateApiObject (#12)
+* 1525cd3 Add a link in the README to the Sheet V4 API Discover Doc (#11)
+* 6d5bfb3 Improve color api and documentation (#10)
+
 ## v0.3.0 (2023-09-28)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.2.0..v0.3.0)
