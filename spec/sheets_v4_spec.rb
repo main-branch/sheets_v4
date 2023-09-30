@@ -76,9 +76,21 @@ RSpec.describe SheetsV4 do
 
   describe '.color' do
     it 'should return the color object for the given name' do
-      SheetsV4::COLORS.each_key do |color_name|
-        expect(described_class.color(color_name)).to eq(SheetsV4::COLORS[color_name])
+      SheetsV4::Color::COLORS.each_key do |color_name|
+        expect(described_class.color(color_name)).to eq(SheetsV4::Color::COLORS[color_name])
       end
+    end
+
+    it 'should return the color object when name is given as a symbol' do
+      expect(described_class.color(:black)).to eq(SheetsV4::Color::COLORS[:black])
+    end
+
+    it 'should return the color object when name is given as a string' do
+      expect(described_class.color('black')).to eq(SheetsV4::Color::COLORS[:black])
+    end
+
+    it 'should raise a RuntimeError if a color is not found' do
+      expect { described_class.color(:non_existant_color) }.to raise_error(RuntimeError)
     end
   end
 end

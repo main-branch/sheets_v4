@@ -15,6 +15,7 @@ Unofficial helpers for the Google Sheets V4 API
   * [Other Links](#other-links)
 * [Installation](#installation)
 * [Usage](#usage)
+  * [Colors](#colors)
 * [Development](#development)
 * [Creating a Google API Service Account](#creating-a-google-api-service-account)
 * [Contributing](#contributing)
@@ -54,6 +55,19 @@ gem install sheets_v4
 ## Usage
 
 [Detailed API documenation](https://rubydoc.info/gems/sheets_v4/) is hosted on rubygems.org.
+
+### Colors
+
+Color objects (with appropriate :red, :green, :blue values) can be retrieved by name
+using `SheetsV4.color(:black)` or `SheetsV4::Color.black` (these are equivalent).
+
+Color names can be listed using `SheetsV4.color_names`.
+
+The color object returned is a Hash as follows:
+
+```Ruby
+SheetsV4::Color.black #=> {:red=>0.0, :green=>0.0, :blue=>0.0}
+```
 
 ## Development
 
