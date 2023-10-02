@@ -55,56 +55,23 @@ RSpec.describe SheetsV4 do
     end
   end
 
-  let(:schemas) do
-    {
-      'PersonSchema' => {
-        'type' => 'object',
-        'properties' => {
-          'name' => { 'type' => 'string' },
-          'location' => { '$ref' => 'LocationSchema' },
-          'active' => { 'type' => 'boolean' }
-        }
-      },
-      'LocationSchema' => {
-        'type' => 'object',
-        'properties' => {
-          'city' => { 'type' => 'string' },
-          'state' => { 'type' => 'string' }
-        }
-      }
-    }
-  end
-
-  let(:sheets_discovery_uri) { URI.parse('https://sheets.googleapis.com/$discovery/rest?version=v4') }
-
-  let(:sheets_discovery_document) { double('sheets_discovery_document', body: JSON.generate('schemas' => schemas)) }
-
-  before do
-    allow(Net::HTTP).to(
-      receive(:get_response)
-      .with(sheets_discovery_uri)
-      .and_return(sheets_discovery_document)
-    )
-  end
-
   describe '.validate_api_object' do
     subject { described_class.validate_api_object(schema_name:, object:, logger:) }
-    let(:schema_name) { 'PersonSchema' }
-    let(:object) do
-      { 'name' => 'James', 'location' => { 'city' => 'Temecula', 'state' => 'CA' }, 'active' => true }
-    end
+    let(:schema_name) { double('schema_name') }
+    let(:object) { double('object') }
+    let(:logger) { double('logger') }
 
-    let(:logger) { Logger.new(nil) }
-
-    it 'validates the object against the schema' do
-      expect { subject }.not_to raise_error
-    end
-
-    context 'with an object that does not conform to the schema' do
-      let(:object) { { 'name' => 'James', 'banned' => false } }
-      it 'should raise an error if the object is not valid' do
-        expect { subject }.to raise_error(RuntimeError, /does not conform/)
-      end
+    it 'should call SheetsV4::ValidateApiObjects::Validate to do the validation' do
+      expect(SheetsV4::ValidateApiObjects::Validate).to(
+        receive(:new)
+        .with(logger:)
+        .and_call_original
+      )
+      expect_any_instance_of(SheetsV4::ValidateApiObjects::Validate).to(
+        receive(:call)
+        .with(schema_name:, object:)
+      )
+      subject
     end
   end
 
