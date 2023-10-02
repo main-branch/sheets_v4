@@ -4,6 +4,14 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.5.0 (2023-10-01)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.4.0..v0.5.0)
+
+Changes since v0.4.0:
+
+* b403430 Refactor SheetsV4.validate_api_object (#15)
+
 ## v0.4.0 (2023-09-29)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.3.0..v0.4.0)
