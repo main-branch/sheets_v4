@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SheetsV4::ValidateApiObjects::Validate do
+RSpec.describe SheetsV4::ValidateApiObjects::ValidateApiObject do
   let(:validator) { described_class.new(logger:) }
   let(:logger) { Logger.new($stdout, level: Logger::DEBUG) }
 

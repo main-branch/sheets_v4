@@ -70,7 +70,7 @@ module SheetsV4
   # @return [void]
   #
   def self.validate_api_object(schema_name:, object:, logger: Logger.new(nil))
-    SheetsV4::ValidateApiObjects::Validate.new(logger:).call(schema_name:, object:)
+    SheetsV4::ValidateApiObjects::ValidateApiObject.new(logger:).call(schema_name:, object:)
   end
 
   # List the names of the schemas available to use in the Google Sheets API

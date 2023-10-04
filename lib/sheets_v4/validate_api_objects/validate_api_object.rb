@@ -9,7 +9,7 @@ module SheetsV4
     #
     # @api public
     #
-    class Validate
+    class ValidateApiObject
       # Create a new validator
       #
       # By default, a nil logger is used. This means that no messages are logged.

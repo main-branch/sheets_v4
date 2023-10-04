@@ -17,4 +17,4 @@ end
 require_relative 'validate_api_objects/load_schemas'
 require_relative 'validate_api_objects/resolve_schema_ref'
 require_relative 'validate_api_objects/traverse_object_tree'
-require_relative 'validate_api_objects/validate'
+require_relative 'validate_api_objects/validate_api_object'
