@@ -75,6 +75,29 @@ RSpec.describe SheetsV4 do
     end
   end
 
+  describe '.api_object_schema_names' do
+    subject { described_class.api_object_schema_names(logger:) }
+    let(:logger) { double('logger') }
+    let(:schema_loader) { double('schema_loader') }
+    let(:schemas) { double('schemas') }
+    let(:schema_names) { %w[schema1 schema2] }
+    let(:expected_result) { double('expected_result') }
+
+    before do
+      allow(SheetsV4::ValidateApiObjects::LoadSchemas).to(
+        receive(:new)
+        .with(logger:)
+        .and_return(schema_loader)
+      )
+      allow(schema_loader).to receive(:call).and_return(schemas)
+      allow(schemas).to receive(:keys).and_return(schema_names)
+    end
+
+    it 'should call SheetsV4::ValidateApiObjects::LoadSchemas to load the schemas' do
+      expect(subject).to eq(schema_names)
+    end
+  end
+
   describe '.color' do
     it 'should return the color object for the given name' do
       SheetsV4::Color::COLORS.each_key do |color_name|
