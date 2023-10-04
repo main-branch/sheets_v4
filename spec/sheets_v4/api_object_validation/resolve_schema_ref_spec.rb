@@ -2,7 +2,7 @@
 
 require 'uri'
 
-RSpec.describe SheetsV4::ValidateApiObjects::ResolveSchemaRef do
+RSpec.describe SheetsV4::ApiObjectValidation::ResolveSchemaRef do
   let(:ref_resolver) { described_class.new(logger:) }
   let(:logger) { Logger.new(nil) }
 
@@ -31,7 +31,7 @@ RSpec.describe SheetsV4::ValidateApiObjects::ResolveSchemaRef do
     let(:schemas_loader) { double('schemas_loader') }
 
     before do
-      allow(SheetsV4::ValidateApiObjects::LoadSchemas).to(
+      allow(SheetsV4::ApiObjectValidation::LoadSchemas).to(
         receive(:new)
           .with(logger:)
           .and_return(schemas_loader)
