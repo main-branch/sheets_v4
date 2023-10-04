@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module SheetsV4
-  module ValidateApiObjects
+  module ApiObjectValidation
     # Load the Google Discovery API description for the Sheets V4 API
     #
     # @example
     #   logger = Logger.new(STDOUT, :level => Logger::ERROR)
-    #   schemas = SheetsV4::ValidateApiObjects::LoadSchemas.new(logger:).call
+    #   schemas = SheetsV4::ApiObjectValidation::LoadSchemas.new(logger:).call
     #
     # @api private
     #
@@ -18,7 +18,7 @@ module SheetsV4
       # The schemas are only loaded once and cached.
       #
       # @example
-      #   schema_loader = SheetsV4::ValidateApiObjects::LoadSchemas.new
+      #   schema_loader = SheetsV4::ApiObjectValidation::LoadSchemas.new
       #
       # @param logger [Logger] the logger to use
       #
@@ -30,8 +30,8 @@ module SheetsV4
       #
       # @example
       #   logger = Logger.new(STDOUT, :level => Logger::INFO)
-      #   validator = SheetsV4::ValidateApiObjects::LoadSchemas.new(logger)
-      #   validator.logger == logger # => true
+      #   schema_loader = SheetsV4::ApiObjectValidation::LoadSchemas.new(logger)
+      #   schema_loader.logger == logger # => true
       #
       # @return [Logger]
       #
@@ -146,7 +146,7 @@ module SheetsV4
       # @return [void]
       # @api private
       def post_process_schemas(schemas)
-        SheetsV4::ValidateApiObjects::TraverseObjectTree.call(
+        SheetsV4::ApiObjectValidation::TraverseObjectTree.call(
           object: schemas, visitor: ->(path:, object:) { schema_visitor(path:, object:) }
         )
       end

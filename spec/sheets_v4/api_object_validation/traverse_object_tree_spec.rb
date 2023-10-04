@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SheetsV4::ValidateApiObjects::TraverseObjectTree do
+RSpec.describe SheetsV4::ApiObjectValidation::TraverseObjectTree do
   describe '.call' do
     subject { described_class.call(object:, visitor:) }
     let(:visits) { [] }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SheetsV4
-  module ValidateApiObjects
+  module ApiObjectValidation
     # Visit all objects in arbitrarily nested object tree of hashes and/or arrays
     #
     # @api public
@@ -16,7 +16,7 @@ module SheetsV4
       #
       # ```Ruby
       # visitor = -> (path:, object:) { puts "path: #{path}, object: #{obj}" }
-      # SheetsV4::ValidateApiObjects::TraverseObjectTree.call(object:, visitor:)
+      # SheetsV4::ApiObjectValidation::TraverseObjectTree.call(object:, visitor:)
       # ```
       #
       # @example Given a simple object (not very exciting)

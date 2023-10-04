@@ -61,13 +61,13 @@ RSpec.describe SheetsV4 do
     let(:object) { double('object') }
     let(:logger) { double('logger') }
 
-    it 'should call SheetsV4::ValidateApiObjects::ValidateApiObject to do the validation' do
-      expect(SheetsV4::ValidateApiObjects::ValidateApiObject).to(
+    it 'should call SheetsV4::ApiObjectValidation::ValidateApiObject to do the validation' do
+      expect(SheetsV4::ApiObjectValidation::ValidateApiObject).to(
         receive(:new)
         .with(logger:)
         .and_call_original
       )
-      expect_any_instance_of(SheetsV4::ValidateApiObjects::ValidateApiObject).to(
+      expect_any_instance_of(SheetsV4::ApiObjectValidation::ValidateApiObject).to(
         receive(:call)
         .with(schema_name:, object:)
       )
@@ -84,7 +84,7 @@ RSpec.describe SheetsV4 do
     let(:expected_result) { double('expected_result') }
 
     before do
-      allow(SheetsV4::ValidateApiObjects::LoadSchemas).to(
+      allow(SheetsV4::ApiObjectValidation::LoadSchemas).to(
         receive(:new)
         .with(logger:)
         .and_return(schema_loader)
@@ -93,7 +93,7 @@ RSpec.describe SheetsV4 do
       allow(schemas).to receive(:keys).and_return(schema_names)
     end
 
-    it 'should call SheetsV4::ValidateApiObjects::LoadSchemas to load the schemas' do
+    it 'should call SheetsV4::ApiObjectValidation::LoadSchemas to load the schemas' do
       expect(subject).to eq(schema_names)
     end
   end

@@ -3,7 +3,7 @@
 require_relative 'sheets_v4/version'
 require_relative 'sheets_v4/color'
 require_relative 'sheets_v4/create_credential'
-require_relative 'sheets_v4/validate_api_objects'
+require_relative 'sheets_v4/api_object_validation'
 
 require 'google/apis/sheets_v4'
 require 'json'
@@ -70,7 +70,7 @@ module SheetsV4
   # @return [void]
   #
   def self.validate_api_object(schema_name:, object:, logger: Logger.new(nil))
-    SheetsV4::ValidateApiObjects::ValidateApiObject.new(logger:).call(schema_name:, object:)
+    SheetsV4::ApiObjectValidation::ValidateApiObject.new(logger:).call(schema_name:, object:)
   end
 
   # List the names of the schemas available to use in the Google Sheets API
@@ -81,7 +81,7 @@ module SheetsV4
   # @return [Array<String>] the names of the schemas available
   #
   def self.api_object_schema_names(logger: Logger.new(nil))
-    SheetsV4::ValidateApiObjects::LoadSchemas.new(logger:).call.keys.sort
+    SheetsV4::ApiObjectValidation::LoadSchemas.new(logger:).call.keys.sort
   end
 
   # Given the name of the color, return a Google Sheets API color object

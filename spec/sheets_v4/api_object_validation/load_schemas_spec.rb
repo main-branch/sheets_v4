@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SheetsV4::ValidateApiObjects::LoadSchemas do
+RSpec.describe SheetsV4::ApiObjectValidation::LoadSchemas do
   let(:schemas_loader) { described_class.new(logger:) }
   let(:logger) { Logger.new(nil) }
 
