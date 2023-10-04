@@ -19,12 +19,16 @@ module SheetsV4
   #
   # Simplifies creating and configuring a the credential.
   #
-  # @example using the crednetial in `~/.google-api-credential`
+  # @example using the credential in `~/.google-api-credential`
   #   SheetsV4.sheets_service
   #
   # @example using a credential passed in as a string
-  #   credential_source = File.read(File.join(Dir.home, '.credential'))
-  #   SheetsV4.sheets_service(credential_source:
+  #   credential_source = File.read(File.expand_path('~/.google-api-credential.json'))
+  #   SheetsV4.sheets_service(credential_source:)
+  #
+  # @example using a credential passed in as an IO
+  #   credential_source = File.open(File.expand_path('~/.google-api-credential.json'))
+  #   SheetsV4.sheets_service(credential_source:)
   #
   # @param credential_source [nil, String, IO, Google::Auth::*] may
   #   be either an already constructed credential, the credential read into a String or
@@ -50,10 +54,10 @@ module SheetsV4
   # Validate the object using the named JSON schema
   #
   # The JSON schemas are loaded from the Google Disocvery API. The schemas names are
-  # returned by `SheetsV4.api_object_schemas.keys`.
+  # returned by `SheetsV4.api_object_schema_names`.
   #
   # @example
-  #   schema_name = 'BatchUpdateSpreadsheetRequest'
+  #   schema_name = 'batch_update_spreadsheet_request'
   #   object = { 'requests' => [] }
   #   SheetsV4.validate_api_object(schema_name:, object:)
   #
@@ -67,6 +71,17 @@ module SheetsV4
   #
   def self.validate_api_object(schema_name:, object:, logger: Logger.new(nil))
     SheetsV4::ValidateApiObjects::Validate.new(logger:).call(schema_name:, object:)
+  end
+
+  # List the names of the schemas available to use in the Google Sheets API
+  #
+  # @example List the name of the schemas available
+  #   SheetsV4.api_object_schema_names #=> ["add_banding_request", "add_banding_response", ...]
+  #
+  # @return [Array<String>] the names of the schemas available
+  #
+  def self.api_object_schema_names(logger: Logger.new(nil))
+    SheetsV4::ValidateApiObjects::LoadSchemas.new(logger:).call.keys.sort
   end
 
   # Given the name of the color, return a Google Sheets API color object
