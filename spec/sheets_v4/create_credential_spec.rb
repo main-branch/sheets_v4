@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SheetsV4::CredentialCreator do
+RSpec.describe SheetsV4::CreateCredential do
   describe '.call' do
     subject { described_class.call(credential_source, scopes, credential_factory) }
 

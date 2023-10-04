@@ -23,7 +23,6 @@ module SheetsV4
       #
       # @param method_name [#to_sym] the name of the color
       # @param arguments [Array] ignored
-      # @param block [Proc] ignored
       # @return [Hash] the color object
       # @api private
       def method_missing(method_name, *arguments, &)

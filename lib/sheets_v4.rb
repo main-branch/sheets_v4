@@ -2,7 +2,7 @@
 
 require_relative 'sheets_v4/version'
 require_relative 'sheets_v4/color'
-require_relative 'sheets_v4/credential_creator'
+require_relative 'sheets_v4/create_credential'
 require_relative 'sheets_v4/validate_api_objects'
 
 require 'google/apis/sheets_v4'
@@ -42,7 +42,7 @@ module SheetsV4
   #
   # @return a new SheetsService instance
   #
-  def self.sheets_service(credential_source: nil, scopes: nil, credential_creator: SheetsV4::CredentialCreator)
+  def self.sheets_service(credential_source: nil, scopes: nil, credential_creator: SheetsV4::CreateCredential)
     credential_source ||= File.read(File.expand_path('~/.google-api-credential.json'))
     scopes ||= [Google::Apis::SheetsV4::AUTH_SPREADSHEETS]
 

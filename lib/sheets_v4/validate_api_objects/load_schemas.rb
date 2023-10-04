@@ -84,7 +84,7 @@ module SheetsV4
       # Log an error and raise a RuntimeError based on the HTTP response code
       # @param http_response [Net::HTTPResponse] the HTTP response
       # @return [void]
-      # @raises [RuntimeError]
+      # @raise [RuntimeError]
       # @api private
       def raise_error(http_response)
         message = "HTTP Error '#{http_response.code}' loading schemas from '#{http_response.uri}'"
