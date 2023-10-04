@@ -5,7 +5,7 @@ require 'json_schemer'
 module SheetsV4
   # Creates a Google API credential with an access token
   #
-  class CredentialCreator
+  class CreateCredential
     # Creates a Google API credential with an access token
     #
     # This wraps the boiler plate code into one function to make constructing a
@@ -14,7 +14,7 @@ module SheetsV4
     # @example Constructing a credential from the contents of ~/.credential
     #   credential_source = File.read(File.join(Dir.home, '.credential'))
     #   scope = Google::Apis::SheetsV4::AUTH_SPREADSHEETS
-    #   credential = GoogleApisHelpers.credential(credential_source, scope)
+    #   credential = SheetsV4::CreateCredential.call(credential_source, scope)
     #
     # @param [Google::Auth::*, String, IO, nil] credential_source may be one of four things:
     #   (1) a previously created credential that you want to reuse, (2) a credential read

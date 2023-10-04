@@ -53,7 +53,7 @@ module SheetsV4
 
       # Resolve a JSON schema reference
       #
-      # @param ref [URI] the reference to resolve usually in the form "json-schemer://schema/{name}"
+      # @param ref [URI] the reference to resolve usually in the form "json-schemer://schema/[name]"
       #
       # @return [Hash] the schema object as a hash
       #
