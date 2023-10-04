@@ -61,13 +61,13 @@ RSpec.describe SheetsV4 do
     let(:object) { double('object') }
     let(:logger) { double('logger') }
 
-    it 'should call SheetsV4::ValidateApiObjects::Validate to do the validation' do
-      expect(SheetsV4::ValidateApiObjects::Validate).to(
+    it 'should call SheetsV4::ValidateApiObjects::ValidateApiObject to do the validation' do
+      expect(SheetsV4::ValidateApiObjects::ValidateApiObject).to(
         receive(:new)
         .with(logger:)
         .and_call_original
       )
-      expect_any_instance_of(SheetsV4::ValidateApiObjects::Validate).to(
+      expect_any_instance_of(SheetsV4::ValidateApiObjects::ValidateApiObject).to(
         receive(:call)
         .with(schema_name:, object:)
       )
