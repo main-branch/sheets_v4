@@ -25,6 +25,7 @@ Unofficial helpers for the Google Sheets V4 API
     * [Method 2: constructing requests using hashes](#method-2-constructing-requests-using-hashes)
     * [Which method should be used?](#which-method-should-be-used)
   * [Validating requests](#validating-requests)
+  * [Working with dates and times](#working-with-dates-and-times)
   * [Colors](#colors)
 * [Development](#development)
 * [Contributing](#contributing)
@@ -125,7 +126,7 @@ sheets_service = File.open('credential.json') do |credential_source|
 end
 ```
 
-or an already constructed `Google::Auth::*`` object.
+or an already constructed `Google::Auth::*` object.
 
 ### Building a request
 
@@ -271,6 +272,69 @@ request:
 
 ```Ruby
 SheetsV4.validate_api_object(schema: 'batch_update_spreadsheet_request', object: requests)
+```
+
+### Working with dates and times
+
+Google Sheets, similar to other spreadsheet programs, stores dates and date-time
+values as numbers. This system makes it easier to perform calculations with
+dates and times.
+
+This gem provides two sets of equavalent conversion methods. The first set is defined
+as class methods on the `SheetsV4` class.
+
+* `SheetsV4.date_to_gs(date)` returns a numeric cell value
+* `SheetsV4.gs_to_date(cell_value)` returns a Date object
+* `SheetsV4.datetime_to_gs(datetime)` returns a numeric cell value
+* `SheetsV4.gs_to_datetime(cell_value)` returns a DateTime object
+
+In order to convert to and from spreadsheet values, the spreadsheet timezone must
+be known. A spreadsheet's timezone is found in the Google Sheets spreadsheet object's
+properties:
+
+```Ruby
+SheetsV4.default_spreadsheet_tz = spreadsheet.properties.time_zone
+```
+
+If a time zone is not set using `SheetsV4.default_spreadsheet_tz`, a RuntimeError
+will be raised when any of the above methods are used.
+
+Here is an example of how the timezone can change the values fetched from the
+spreadsheet:
+
+```Ruby
+cell_value = 44333.191666666666
+
+SheetsV4.default_spreadsheet_tz = 'America/New_York'
+datetime = SheetsV4.gs_to_datetime(cell_value) #=> Mon, 17 May 2021 04:36:00 -0400
+datetime.utc #=> 2021-05-17 08:36:00 UTC
+
+SheetsV4.default_spreadsheet_tz = 'America/Los_Angeles'
+datetime = SheetsV4.gs_to_datetime(cell_value) #=> Mon, 17 May 2021 04:36:00 -0700
+datetime.utc #=> 2021-05-17 11:36:00 UTC
+```
+
+Valid time zone names are those listed in one of these two sources:
+
+* `ActiveSupport::TimeZone.all.map { |tz| tz.tzinfo.name }`
+* `ActiveSupport::TimeZone.all.map(&:name)`
+
+The `SheetsV4` methods works well if the spreadsheet timezone is constant through
+the run of the program. If this is not the case -- for instance when working with
+multiple spreadsheets whose timezones may be different -- then use
+`SheetsV4::ConvertDatesAndTimes`.
+
+Each instance of `SheetsV4::ConvertDatesAndTimes` has it's own spreadsheet timezone
+used in the conversions. Instance methods for this class are the same as the
+date conversion methods on the SheetsV4 class.
+
+Example:
+
+```Ruby
+cell_value = 44333.191666666666
+converter = SheetsV4::ConvertDatesAndTimes.new('America/Los_Angeles')
+datetime = SheetsV4.gs_to_datetime(cell_value) #=> Mon, 17 May 2021 04:36:00 -0700
+datetime.utc #=> 2021-05-17 11:36:00 UTC
 ```
 
 ### Colors

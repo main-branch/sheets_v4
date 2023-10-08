@@ -46,3 +46,4 @@
 * [ ] Protected ranges
 * [ ] Resize a sheet
 * [ ] Retrying on error
+* [ ] Set a custom datetime or decimal format for a range [1](https://developers.google.com/sheets/api/samples/formatting#set_a_custom_datetime_or_decimal_format_for_a_range)
