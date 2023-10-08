@@ -4,6 +4,17 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.7.0 (2023-10-08)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.6.0..v0.7.0)
+
+Changes since v0.6.0:
+
+* 616fe1f Add conversions bewteen Date/DateTime and spreadsheet values (#22)
+* 6f37337 Rename SheetsV4::ValidateApiObjects to SheetsV4::ApiObjectValidation (#21)
+* 0f76992 Rename SheetsV4::ValidateApiObjects::Validate to SheetsV4::ValidateApiObjects::ValidateApiObject (#20)
+* e80040c Rename SheetsV4::CredentialCreator to SheetsV4::CreateCredential (#19)
+
 ## v0.6.0 (2023-10-03)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.5.0..v0.6.0)
