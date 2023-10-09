@@ -57,6 +57,8 @@ module SheetsV4
       end
     end
 
+    # @!group Validation
+
     # Validate the object using the named JSON schema
     #
     # The JSON schemas are loaded from the Google Disocvery API. The schemas names are
@@ -90,6 +92,8 @@ module SheetsV4
       SheetsV4::ApiObjectValidation::LoadSchemas.new(logger:).call.keys.sort
     end
 
+    # @!group Colors
+
     # Given the name of the color, return a Google Sheets API color object
     #
     # Available color names are listed using `SheetsV4.color_names`.
@@ -116,6 +120,8 @@ module SheetsV4
     # @return [Array<Symbol>] the names of the colors available
     #
     def color_names = SheetsV4::Color::COLORS.keys
+
+    # @!group Date and DateTime Conversions
 
     # @!attribute [rw] default_spreadsheet_tz
     #
