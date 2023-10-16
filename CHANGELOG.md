@@ -4,6 +4,14 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.9.0 (2023-10-16)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.8.0..v0.9.0)
+
+Changes since v0.8.0:
+
+* 8fd7ec5 Add convenience methods to Spreadsheet to access Sheets (#28)
+
 ## v0.8.0 (2023-10-15)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.7.0..v0.8.0)
