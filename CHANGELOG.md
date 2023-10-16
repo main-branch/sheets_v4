@@ -4,6 +4,16 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.8.0 (2023-10-15)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.7.0..v0.8.0)
+
+Changes since v0.7.0:
+
+* d8f695c Add extensions to Google::Apis::SheetsV4 classes (#26)
+* ed2dc0e Show the cop names on Rubocop offenses when Rubocop is run from Rake (#25)
+* c5bfcc1 Group the SheetsV4 methods in the Yard Docs to make them easier to find (#24)
+
 ## v0.7.0 (2023-10-08)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.6.0..v0.7.0)
