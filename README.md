@@ -303,6 +303,13 @@ sheets_service, spreadsheet, and sheet objects separately.
 
 The `sheets_service` attribute is added and is set by `SheetsService#get_spreadsheet`.
 
+Convenience methods for getting sheets within the spreadsheet are added:
+
+* `sheet(id_or_title)`: returns the sheet matching the id or title given
+* `sheet_id(title)`: returns the ID  for the sheet matching the title given
+* `each_sheet(ids_or_titles)`: enumerates the sheets within a spreadsheet matching
+  the given IDs or titles.
+
 #### Sheet Extensions
 
 The `sheets_service` and `spreadsheet` attributes are added. Both are set when the
