@@ -25,6 +25,10 @@ Unofficial helpers for the Google Sheets V4 API
     * [Method 2: constructing requests using hashes](#method-2-constructing-requests-using-hashes)
     * [Which method should be used?](#which-method-should-be-used)
   * [Validating requests](#validating-requests)
+  * [Google Extensions](#google-extensions)
+    * [SheetsService Extensions](#sheetsservice-extensions)
+    * [Spreadsheet Extensions](#spreadsheet-extensions)
+    * [Sheet Extensions](#sheet-extensions)
   * [Working with dates and times](#working-with-dates-and-times)
   * [Colors](#colors)
 * [Development](#development)
@@ -273,6 +277,36 @@ request:
 ```Ruby
 SheetsV4.validate_api_object(schema: 'batch_update_spreadsheet_request', object: requests)
 ```
+
+### Google Extensions
+
+The `SheetsV4::GoogleExtensions` module provides extensions to the `Google::Apis::SheetsV4`
+classes to simplify use of the SheetsV4 API.
+
+These extensions are not loaded by default and are not required to use other parts
+of this Gem. To enable these extension, you must:
+
+```Ruby
+require 'sheets_v4/google_extensions'
+```
+
+#### SheetsService Extensions
+
+Functionality is added to `get_spreadsheet` to set the `sheets_service` attribute on
+the returned spreadsheet and set the `sheets_service` and `spreadsheet` attributes
+on the sheets contained in the spreadsheet.
+
+This can simplify complex spreadsheet updates because you won't have to pass a
+sheets_service, spreadsheet, and sheet objects separately.
+
+#### Spreadsheet Extensions
+
+The `sheets_service` attribute is added and is set by `SheetsService#get_spreadsheet`.
+
+#### Sheet Extensions
+
+The `sheets_service` and `spreadsheet` attributes are added. Both are set when the
+sheet's spreadsheet is loaded by `SheetsService#get_spreadsheet`.
 
 ### Working with dates and times
 
