@@ -17,51 +17,38 @@ require 'googleauth'
 
 def name_rows
   SheetsV4.color_names.map do |color_name|
-    Google::Apis::SheetsV4::RowData.new(
-      values: [
-        Google::Apis::SheetsV4::CellData.new(
-          user_entered_value: Google::Apis::SheetsV4::ExtendedValue.new(string_value: color_name.to_s)
-        )
-      ]
-    )
-    # { values: [{ user_entered_value: { string_value: color_name.to_s } }] }
+    { values: [{ user_entered_value: { string_value: color_name.to_s } }] }
   end
 end
 
 def write_names
   rows = name_rows
   fields = 'user_entered_value'
-  start = Google::Apis::SheetsV4::GridCoordinate.new(sheet_id: 0, row_index: 1, column_index: 0)
-  Google::Apis::SheetsV4::Request.new(
-    update_cells: Google::Apis::SheetsV4::UpdateCellsRequest.new(rows:, fields:, start:)
-  )
+  start = { sheet_id: 0, row_index: 1, column_index: 0 }
+  { update_cells: { rows:, fields:, start: } }
 end
 
 def background_color_rows
   SheetsV4.color_names.map { |color_name| SheetsV4.color(color_name) }.map do |color|
-    background_color = Google::Apis::SheetsV4::Color.new(**color)
-    user_entered_format = Google::Apis::SheetsV4::CellFormat.new(background_color:)
-    cell_data = Google::Apis::SheetsV4::CellData.new(user_entered_format:)
-    Google::Apis::SheetsV4::RowData.new(values: [cell_data])
+    { values: [{ user_entered_format: { background_color: color } }] }
   end
 end
 
 def set_background_colors
   rows = background_color_rows
   fields = 'user_entered_format'
-  start = Google::Apis::SheetsV4::GridCoordinate.new(sheet_id: 0, row_index: 1, column_index: 1)
-  update_cells = Google::Apis::SheetsV4::UpdateCellsRequest.new(rows:, fields:, start:)
-  Google::Apis::SheetsV4::Request.new(update_cells:)
+  start = { sheet_id: 0, row_index: 1, column_index: 1 }
+  { update_cells: { rows:, fields:, start: } }
 end
 
-def requests = Google::Apis::SheetsV4::BatchUpdateSpreadsheetRequest.new(requests: [write_names, set_background_colors])
+def requests = { requests: [write_names, set_background_colors] }
 
 # OPTIONAL: validate the requests against the schema before sending them to the API.
 #
 # While not necessary, it can be helpful to identify errors since the API will return
 # an error if the request is invalid but does not tell you where the problem is.
 #
-SheetsV4.validate_api_object(schema_name: 'batch_update_spreadsheet_request', object: requests.to_h)
+SheetsV4.validate_api_object(schema_name: 'batch_update_spreadsheet_request', object: requests)
 
 spreadsheet_id = '18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY'
 SheetsV4.sheets_service.batch_update_spreadsheet(spreadsheet_id, requests)

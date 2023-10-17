@@ -10,11 +10,13 @@
 Unofficial helpers for the Google Sheets V4 API
 
 * [Installation](#installation)
+* [Examples](#examples)
 * [Important links for programming Google Sheets](#important-links-for-programming-google-sheets)
+  * [SheetsV4 documenation](#sheetsv4-documenation)
   * [General API documentation](#general-api-documentation)
   * [Ruby implementation of the Sheets API](#ruby-implementation-of-the-sheets-api)
-  * [Other Links](#other-links)
-* [Getting Started](#getting-started)
+  * [Other links](#other-links)
+* [Getting started](#getting-started)
   * [Creating a Google Cloud project](#creating-a-google-cloud-project)
   * [Enable the APIs you want to use](#enable-the-apis-you-want-to-use)
   * [Create a Google API credentials](#create-a-google-api-credentials)
@@ -49,7 +51,27 @@ If bundler is not being used to manage dependencies, install the gem by executin
 gem install sheets_v4
 ```
 
+## Examples
+
+Many examples can be found in the `examples` directory of this project. The examples
+have [a README of their own](https://github.com/main-branch/sheets_v4/tree/reformat_examples/examples)
+which describes each example.
+
+Prior to running an example, clone this project and run `bundle install` in the
+project's root working directory.
+
+Run an example using `bundle exec`. For example, to run the `set_background_color1`
+example:
+
+```shell
+bundle exec examples/set_background_color1
+```
+
 ## Important links for programming Google Sheets
+
+### SheetsV4 documenation
+
+This Gem's YARD documentation is hosted on [rubydoc.info]https://rubydoc.info/gems/sheets_v4/.
 
 ### General API documentation
 
@@ -63,11 +85,11 @@ gem install sheets_v4
 * [SheetsService Class](https://github.com/googleapis/google-api-ruby-client/blob/main/generated/google-apis-sheets_v4/lib/google/apis/sheets_v4/service.rb)
 * [All Other Sheets Classes](https://github.com/googleapis/google-api-ruby-client/blob/main/generated/google-apis-sheets_v4/lib/google/apis/sheets_v4/classes.rb)
 
-### Other Links
+### Other links
 
 * [Apps Script for Sheets](https://developers.google.com/apps-script/guides/sheets)
 
-## Getting Started
+## Getting started
 
 In order to use this gem, you will need to obtain a Google API sheets service
 credential following the instructions below.
