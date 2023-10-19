@@ -7,7 +7,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/maintainability)](https://codeclimate.com/github/main-branch/sheets_v4/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/test_coverage)](https://codeclimate.com/github/main-branch/sheets_v4/test_coverage)
 
-Unofficial helpers for the Google Sheets V4 API
+Unofficial helpers and extensions for the Google Sheets V4 API
 
 * [Installation](#installation)
 * [Examples](#examples)
@@ -17,9 +17,9 @@ Unofficial helpers for the Google Sheets V4 API
   * [Ruby implementation of the Sheets API](#ruby-implementation-of-the-sheets-api)
   * [Other links](#other-links)
 * [Getting started](#getting-started)
-  * [Creating a Google Cloud project](#creating-a-google-cloud-project)
+  * [Create a Google Cloud project](#create-a-google-cloud-project)
   * [Enable the APIs you want to use](#enable-the-apis-you-want-to-use)
-  * [Create a Google API credentials](#create-a-google-api-credentials)
+  * [Download a Google API credential file](#download-a-google-api-credential-file)
 * [Usage](#usage)
   * [Obtaining an authenticated SheetsService](#obtaining-an-authenticated-sheetsservice)
   * [Building a request](#building-a-request)
@@ -32,7 +32,7 @@ Unofficial helpers for the Google Sheets V4 API
     * [Spreadsheet Extensions](#spreadsheet-extensions)
     * [Sheet Extensions](#sheet-extensions)
   * [Working with dates and times](#working-with-dates-and-times)
-  * [Colors](#colors)
+  * [Working with colors](#working-with-colors)
 * [Development](#development)
 * [Contributing](#contributing)
 * [License](#license)
@@ -91,23 +91,25 @@ This Gem's YARD documentation is hosted on [rubydoc.info]https://rubydoc.info/ge
 
 ## Getting started
 
-In order to use this gem, you will need to obtain a Google API sheets service
+In order to use this gem, you will need to obtain a Google API service account
 credential following the instructions below.
 
-### Creating a Google Cloud project
+### Create a Google Cloud project
 
 Create a Google Cloud project using [these directions](https://developers.google.com/workspace/guides/create-project).
 
 ### Enable the APIs you want to use
 
 Enable the Sheets API for this project using [these directions](https://developers.google.com/workspace/guides/enable-apis).
+Optionally, enable the Drive API since you may need it to create a spreadsheet.
 
-### Create a Google API credentials
+### Download a Google API credential file
 
-Create a service account and download credentials using [these directions](https://developers.google.com/workspace/guides/create-credentials#service-account).
+Create a service account and download a credential file using [these directions](https://developers.google.com/workspace/guides/create-credentials#service-account).
 
-You can store the download credential files anywhere on your system. The recommended
-location is `~/.google-api-credential.json`.
+You can store the download credential files anywhere on your system.
+The recommended location is `~/.google-api-credential.json` since this is default
+credential file that `SheetsV4.sheets_service` uses.
 
 ## Usage
 
@@ -137,8 +139,8 @@ an authenticated SheetsService object can be obtained with one method call:
 sheets_service = SheetsV4.sheets_service
 ```
 
-If the credential is stored elsewhere, pass the credential_source to `SheetsV4.sheets_service`
-manually. `credential_source` can be a String:
+If the credential is stored somewhere else, pass the `credential_source` to
+`SheetsV4.sheets_service` manually. `credential_source` can be a String:
 
 ```Ruby
 sheets_service = SheetsV4.sheets_service(credential_source: File.read('credential.json'))
@@ -400,7 +402,7 @@ datetime = SheetsV4.gs_to_datetime(cell_value) #=> Mon, 17 May 2021 04:36:00 -07
 datetime.utc #=> 2021-05-17 11:36:00 UTC
 ```
 
-### Colors
+### Working with colors
 
 Color objects (with appropriate :red, :green, :blue values) can be retrieved by name
 using `SheetsV4.color(:black)` or `SheetsV4::Color.black` (these are equivalent).
