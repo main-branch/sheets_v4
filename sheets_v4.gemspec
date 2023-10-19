@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['James Couball']
   spec.email = ['jcouball@yahoo.com']
 
-  spec.summary = 'Unofficial helpers for the Google Sheets V4 API'
+  spec.summary = 'Unofficial helpers and extensions for the Google Sheets V4 API'
   spec.description = spec.summary
   spec.homepage = 'https://github.com/main-branch/sheets_v4'
   spec.license = 'MIT'
