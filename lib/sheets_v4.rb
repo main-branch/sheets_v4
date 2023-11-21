@@ -4,7 +4,6 @@ require_relative 'sheets_v4/version'
 require_relative 'sheets_v4/color'
 require_relative 'sheets_v4/convert_dates_and_times'
 require_relative 'sheets_v4/create_credential'
-require_relative 'sheets_v4/api_object_validation'
 
 require 'active_support'
 require 'active_support/values/time_zone'
@@ -55,41 +54,6 @@ module SheetsV4
       Google::Apis::SheetsV4::SheetsService.new.tap do |service|
         service.authorization = credential_creator.call(credential_source, scopes)
       end
-    end
-
-    # @!group Validation
-
-    # Validate the object using the named JSON schema
-    #
-    # The JSON schemas are loaded from the Google Disocvery API. The schemas names are
-    # returned by `SheetsV4.api_object_schema_names`.
-    #
-    # @example
-    #   schema_name = 'batch_update_spreadsheet_request'
-    #   object = { 'requests' => [] }
-    #   SheetsV4.validate_api_object(schema_name:, object:)
-    #
-    # @param schema_name [String] the name of the schema to validate against
-    # @param object [Object] the object to validate
-    # @param logger [Logger] the logger to use for logging error, info, and debug message
-    #
-    # @raise [RuntimeError] if the object does not conform to the schema
-    #
-    # @return [void]
-    #
-    def validate_api_object(schema_name:, object:, logger: Logger.new(nil))
-      SheetsV4::ApiObjectValidation::ValidateApiObject.new(logger:).call(schema_name:, object:)
-    end
-
-    # List the names of the schemas available to use in the Google Sheets API
-    #
-    # @example List the name of the schemas available
-    #   SheetsV4.api_object_schema_names #=> ["add_banding_request", "add_banding_response", ...]
-    #
-    # @return [Array<String>] the names of the schemas available
-    #
-    def api_object_schema_names(logger: Logger.new(nil))
-      SheetsV4::ApiObjectValidation::LoadSchemas.new(logger:).call.keys.sort
     end
 
     # @!group Colors

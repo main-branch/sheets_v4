@@ -277,29 +277,40 @@ Google Sheets API will do one of following depending on the nature of the proble
    common result)
 3. Not return an error with some of the batch requests not having the expected outcome
 
-Luckily, this library provides a way to validate that requests are valid and
-identifies precisely where the request objects do not conform to the API description.
+Luckily, you can validate that requests are valid and identifies precisely where
+the request objects do not conform to the API description using the DiscoveryV1 API.
 That is the subject of the next section [Validating requests](#validating-requests).
 
 ### Validating requests
 
-The [`SheetsV4.validate_api_object`](https://rubydoc.info/gems/sheets_v4/SheetsV4#validate_api_object-class_method)
-method can be used to validate request objects prior to using them in the Google
-Sheets API.
+Use the [DiscoveryV1 API](https://github.com/main-branch/discovery_v1)
+can be used to validate request object prior to using them in the Google Sheets API.
 
-This method takes a `schema_name` and an `object` to validate. Schema names can be
-listed using [`SheetsV4.api_object_schema_names`](https://rubydoc.info/gems/sheets_v4/SheetsV4#api_object_schema_names-class_method).
+In this API, [`DiscoveryV1.validate_object`](https://rubydoc.info/gems/discovery_v1/DiscoveryV1#validate_object-class_method)
+validates a request object for a given schema. This method takes a `schema_name`
+and an `object` to validate. Valid schemas names for an API can be listed using
+[`SheetsV4.api_object_schema_names`](https://rubydoc.info/gems/sheets_v4/SheetsV4#api_object_schema_names-class_method).
 
-This method will either return `true` if `object` conforms to the schema OR it
+`validate_object` will either return `true` if `object` conforms to the schema OR it
 will raise a RuntimeError noting where the object structure did not conform to
 the schema.
 
 In the previous examples (see [Building a request](#building-a-request)), the
-following line can be inserted after the `requests =  ...` line to validate the
+following lines can be inserted after the `requests =  ...` line to validate the
 request:
 
 ```Ruby
-SheetsV4.validate_api_object(schema: 'batch_update_spreadsheet_request', object: requests)
+require 'discovery_v1'
+discovery_service = DiscoveryV1.discovery_service
+rest_description = discovery_service.get_rest_api('sheets', 'v4')
+schema_name = 'batch_update_spreadsheet_request'
+object = requests
+begin
+  DiscoveryV1.validate_object(rest_description:, schema_name:, object:)
+  puts 'BatchUpdateSpreadsheetRequest object is valid'
+rescue RuntimeError => e
+  puts e.message
+end
 ```
 
 ### Google Extensions

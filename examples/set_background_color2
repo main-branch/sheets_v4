@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'discovery_v1'
+require 'discovery_v1/google_extensions'
 require 'sheets_v4'
 require 'googleauth'
 
@@ -48,7 +50,8 @@ def requests = { requests: [write_names, set_background_colors] }
 # While not necessary, it can be helpful to identify errors since the API will return
 # an error if the request is invalid but does not tell you where the problem is.
 #
-SheetsV4.validate_api_object(schema_name: 'batch_update_spreadsheet_request', object: requests)
+rest_description = DiscoveryV1.discovery_service.get_rest_api('sheets', 'v4')
+rest_description.validate_object(schema_name: 'batch_update_spreadsheet_request', object: requests)
 
 spreadsheet_id = '18FAcgotK7nDfLTOTQuGCIjKwxkJMAguhn1OVzpFFgWY'
 SheetsV4.sheets_service.batch_update_spreadsheet(spreadsheet_id, requests)
