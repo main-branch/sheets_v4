@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require 'sheets_v4'
+
+# Requires one of the following Auth scopes:
+#   * https://www.googleapis.com/auth/drive
+#   * https://www.googleapis.com/auth/drive.file
+#   * https://www.googleapis.com/auth/spreadsheets
+
+SheetsV4.sheets_service.create_spreadsheet
