@@ -9,6 +9,15 @@
 
 Unofficial helpers and extensions for the Google Sheets V4 API
 
+Gems in the Google API helper, extensions, and examples series:
+
+* [discovery_v1](https://github.com/main-branch/discovery_v1)
+* [drive_v3](https://github.com/main-branch/drive_v3)
+* [sheets_v4](https://github.com/main-branch/sheets_v4)
+
+## Contents
+
+* [Contents](#contents)
 * [Installation](#installation)
 * [Examples](#examples)
 * [Important links for programming Google Sheets](#important-links-for-programming-google-sheets)
