@@ -1,0 +1,393 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# What API auth scopes are required?
+#
+#   Creating a spreadsheet requires one of the following Auth scopes:
+#
+#     * https://www.googleapis.com/auth/drive
+#     * https://www.googleapis.com/auth/drive.file
+#     * https://www.googleapis.com/auth/spreadsheets
+#
+# In what Google Drive folder are spreadsheets created?
+#
+#   When you create a new spreadsheet using the Google Sheets API, it is created in
+#   the root directory of the authenticated user's Google Drive by default.
+#
+# How do I create a new spreadsheet in a specific folder?
+#
+#   If you want to create the spreadsheet in a specific Google Drive folder, you need
+#   to move the newly created spreadsheet to the desired folder using the Google
+#   Drive API.
+#
+#   Or you can use the Google::Apis::DriveV3::DriveService to create a file with the
+#   necessary parents property and then copy the spreadsheet data into it
+#
+# What is the default title of the spreadsheet?
+#
+#   By default, if you do not specify a title for a newly created spreadsheet, Google
+#   Sheets API will git it the title "Untitled spreadsheet".
+#
+# How do I set the title of a spreadsheet when creating it?
+#
+#   Depending on how the spreadsheet is created, you can set the title of the
+#   spreadsheet in different ways:
+#
+#     * When creating a new spreadsheet using the Google Sheets API, you can set the
+#       title property of the Spreadsheet resource.
+#     * When creating a new spreadsheet using the Google Drive API, you can set the
+#       name property of the File resource.
+#
+# What permissions are required on the Google Drive folder?
+#
+#   The authenticated user must have:
+#
+#   * Write Access: The service account must have at least the "writer" role to write
+#     to the folder, which includes creating new files and modifying the folder's
+#     contents.
+#   * Organize Access: If the service account needs to change the structure within
+#     the folder (like moving files in and out), it also needs the "organizer" role.
+#
+#   See [Roles and
+#   permissions](https://developers.google.com/drive/api/guides/ref-roles) for more
+#   information on roles and permissions in Google Drive.
+#
+#   In the Google Drive UI, to ensure proper permissions share the Folder with the
+#   service account with at least "Editor" permissions.
+#
+# What permissions are set on the spreadsheet by default?
+#
+#   * Owner: The authenticated user account that created the spreadsheet will be the
+#     owner.
+#   * View/Edit Permissions: No other users will have view or edit permissions unless
+#     explicitly shared.
+#
+# How can I set different premissions on the spreadsheet?
+#
+#   You can set different permissions on the spreadsheet by using the Google Drive
+#   API to share the spreadsheet with other users or groups. You can set the
+#   permissions to allow view, edit, or comment access.
+#
+#   See [Permissions:
+#   create](https://developers.google.com/drive/api/v3/reference/permissions/create)
+#   and [Permissions:
+#   update](https://developers.google.com/drive/api/v3/reference/permissions/update)
+#   for more information on setting permissions in Google Drive.
+#
+# How many sheets are created by default and what are their titles?
+#
+#   By default, a new spreadsheet created using the Google Sheets API will have one
+#   sheet whose title is "Sheet1."
+#
+# How do I create a new spreadsheet with specific sheets and data?
+#
+#   To create a new spreadsheet with specific sheets and data, you can use the
+#   spreadsheets.create method of the Google Sheets API and provide the desired sheet
+#   properties and data in the request body.
+#
+#   See
+#   [spreadsheets.create](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/create)
+#   for more information on creating a new spreadsheet with specific sheets and data.
+#
+#
+# Command line usage:
+#
+#   ```sh
+#   create_spreadsheet SPREADSHEET_TITLE \
+#     [--sheet-title=TITLE [--sheet-data=DATA_FILE]]... \
+#     [--folder=FOLDER_ID] \
+#     [ --permission=PERMISSION_SPEC]...
+#
+#   PERMISSION_SPEC := {user:EMAIL:ROLE | group:EMAIL:ROLE | domain:DOMAIN:ROLE | anyone:ROLE}
+#   ```
+#
+#   * An empty sheet named 'Sheet1' will be created if --sheet-name is omitted
+#   * An empty sheet named SHEET_NAME will be created if --sheet-name is given
+#     without a matching --sheet-data
+#   * --sheet-title and --sheet-data can be given multiple times to create multiple
+#     sheets
+#   * --sheet-data identifies the data to be loaded into the last sheet identified by
+#     --sheet-name
+#   * Sheet data in the DATA_FILE must be in comma delimited format
+#
+#   Examples:
+#
+#   Create a new spreadsheet with the default sheet "Sheet1":
+#
+#   ```sh
+#   create-spreadsheet
+#   ```
+#
+#   Create a new spreadsheet with the default sheet "Sheet1" and give "jcouball@gmail.com" permissions to edit:
+
+#   ```sh
+#   create-spreadsheet \
+#     --permission="user:writer:jcouball@gmail.com"
+#   ```
+#
+#   Create a new spreadsheet with the default sheet "Sheet1", give "jcouball@gmail.com" permissions to edit,
+#   and move to the folder with the given ID:
+#
+#   ```sh
+#   create-spreadsheet \
+#     --folder="1O3qdQzrMEyKIeY3F5Mzw6GAg-Wr4iub_" \
+#     --permission="user:writer:jcouball@gmail.com"
+#   ```
+#
+#   Create a new spreadsheet named "My Spreadsheet" in the root directory of the
+#   authenticated user's Google Drive, with the default sheet "Sheet1":
+#
+#   ```sh
+#   create-spreadsheet "My Spreadsheet"
+#   ```
+#
+#   Create a new spreadsheet named "My Spreadsheet" in the root directory of the
+#   authenticated user's Google Drive, with two blank sheets named "First Sheet" and
+#   "Second Sheet":
+#
+#   ```sh
+#   create-spreadsheet "My Spreadsheet" \
+#     --sheet-name="First Sheet" \
+#     --sheet-name "Second Sheet"
+#   ```
+#
+#   Create a new spreadsheet named "My Spreadsheet" in the folder given by FOLDER_ID,
+#   with two sheets named "First Sheet" and "Second Sheet" with the given data:
+#
+#   ```sh
+#   echo "1,2,3\n4,5,6\n7,8,9" > sheet1.csv
+#   echo "11,12,13\n14,15,16\n17,18,19" > sheet2.csv
+#   FOLDER_ID="1O3qdQzrMEyKIeY3F5Mzw6GAg-Wr4iub_"
+#   create-spreadsheet "My Spreadsheet" \
+#     --sheet-name="First Sheet" --sheet-data=sheet1.csv \
+#     --sheet-name="Second Sheet" --sheet-data=sheet2.csv \
+#     --folder "${FOLDER_ID}" \
+#     --permission="user:writer:couballj@gmail.com"
+#   ```
+#
+
+require 'command_line_boss'
+require 'csv'
+
+PERMISSION_SPEC_REGEXP = /
+  ^
+  (?<type>[^:]+)
+  (?:
+    :(?<subject>[^:]+)
+  )?
+  :(?<role>[^:]+)
+  $
+/x
+
+Permission = Data.define(:permission_spec, :type, :subject, :role)
+
+Sheet = Struct.new(:title, :data, keyword_init: true)
+
+# A command line parser for creating spreadsheets
+#
+# @!attribute [r] spreadsheet_title
+#   @return [String, nil] The title of the spreadsheet to create or nil for the default title
+#
+# @!attribute [r] sheets
+#   @return [Array<Sheet>] The sheets to create in the spreadsheet
+#
+# @!attribute [r] folder_id
+#   @return [String, nil] The ID of the folder to move the spreadsheet to
+#
+# @!attribute [r] permissions
+#   @return [Array<Permission>] The list of permissions to add to the spreadsheet
+#
+# @example Create a spreadsheet named "My Spreadsheet" with a default sheet named "Sheet1"
+#   ARGV #=> ["My Spreadsheet"]
+#   options = CommandLineParser.new.call(ARGV)
+#   options.spreadsheet_title #=> "My Spreadsheet"
+#
+# @api pubic
+#
+class CommandLineParser < CommandLineBoss
+  attr_reader :spreadsheet_title, :sheets, :folder_id, :permissions
+
+  private
+
+  def set_defaults
+    @sheets = []
+    @permissions = []
+  end
+
+  # Banner text for the command line help
+  # @api private
+  def banner = <<~TEXT
+    Create a new Google Spreadsheet
+  TEXT
+
+  # Usage text for the command line help
+  # @api private
+  def usage = <<~TEXT
+    Usage:
+
+    create_spreadsheet SPREADSHEET_TITLE \\
+      [--sheet-title=TITLE [--sheet-data=DATA_FILE]]... \\
+      [--folder=FOLDER_ID }] \\
+      [--permission=PERMISSION_SPEC]...
+  TEXT
+
+  # Footer text for the command line help
+  # @api private
+  def footer = <<~TEXT
+    PERMISSION_SPEC := {user:EMAIL:ROLE | group:EMAIL:ROLE | domain:DOMAIN:ROLE | anyone:ROLE}
+    ROLE := {organizer | fileOrganizer | writer | commenter | reader}
+    DATA_FILE := A file containing data in CSV format
+  TEXT
+
+  def define_sheet_title_option
+    parser.on('--sheet-title=TITLE', 'Title of a sheet to create') do |title|
+      sheets << Sheet.new(title:, data: nil)
+    end
+  end
+
+  def define_sheet_data_option
+    parser.on('--sheet-data=DATA_FILE', 'Data file for the last sheet') do |data_file|
+      sheets << Sheet.new(title: nil, data: nil) if sheets.empty?
+      if sheets.last.data
+        error_messages << 'Only one --sheet-data option is allowed per --sheet-title'
+      else
+        sheets.last.data = CSV.read(data_file)
+      end
+    end
+  end
+
+  def define_folder_option
+    parser.on('--folder=FOLDER_ID', 'Create the spreadsheet to the given folder') do |folder_id|
+      if @folder_id
+        error_messages << 'Only one --folder option is allowed'
+      else
+        @folder_id = folder_id
+      end
+    end
+  end
+
+  def define_permission_option
+    parser.on('--permission=PERMISSION_SPEC', 'Set permissions on the spreadsheet') do |permission_spec|
+      match = permission_spec.match(PERMISSION_SPEC_REGEXP)
+      unless match
+        error_messages << "Invalid permission spec: #{permission_spec}"
+        next
+      end
+      permissions << Permission.new(
+        permission_spec:, type: match[:type], subject: match[:subject], role: match[:role]
+      )
+    end
+  end
+
+  def valid_permission_types = %w[user group domain anyone]
+
+  def valid_permission_roles = %w[organizer fileOrganizer writer commenter reader]
+
+  def validate_permission_types
+    permissions.each do |permission|
+      unless valid_permission_types.include?(permission.type)
+        error_messages << "Invalid permission type: #{permission.type}"
+      end
+    end
+  end
+
+  def validate_permission_roles
+    permissions.each do |permission|
+      unless valid_permission_roles.include?(permission.role)
+        error_messages << "Invalid permission role: #{permission.role}"
+      end
+    end
+  end
+
+  def validate_permission_subjects
+    permissions.each do |permission|
+      if permission.type == 'anyone' && permission.subject
+        error_messages << "Permission subject for type 'anyone' should be blank in #{permission.permission_spec}"
+      end
+      if permission.type != 'anyone' && !permission.subject
+        error_messages << "Permission subject missing in #{permission.permission_spec}"
+      end
+    end
+  end
+
+  def parse_arguments
+    @spreadsheet_title = args.shift
+  end
+end
+
+options = CommandLineParser.new.call(ARGV)
+
+require 'discovery_v1'
+require 'drive_v3'
+require 'sheets_v4'
+
+discovery_service = DiscoveryV1.discovery_service
+sheets_rest_description = DiscoveryV1.discovery_service.get_rest_api('sheets', 'v4')
+drive_service = DriveV3.drive_service
+sheets_service = SheetsV4.sheets_service
+
+spreadsheet = { properties: { title: options.spreadsheet_title } }
+
+def sheet_data(sheet)
+  [
+    {
+      start_row: 0,
+      start_column: 0,
+      row_data: (sheet.data || []).map do |row|
+        { values: row.map { |cell| { user_entered_value: { string_value: cell } } } }
+      end
+    }
+  ]
+end
+
+unless options.sheets.empty?
+  spreadsheet[:sheets] = options.sheets.map do |sheet|
+    {
+      properties: { title: sheet.title },
+      data: sheet_data(sheet)
+    }
+  end
+end
+
+permissions = options.permissions.map do |permission|
+  case permission.type
+  when 'user'
+    { type: 'user', role: permission.role, email_address: permission.subject }
+  when 'group'
+    { type: 'group', role: permission.role, email_address: permission.subject }
+  when 'domain'
+    { type: 'domain', role: permission.role, domain: permission.subject }
+  when 'anyone'
+    { type: 'anyone', role: permission.role }
+  end
+end
+
+result = nil
+
+begin
+  # Create the spreadsheet with the given name and create the named sheets and data (if given)
+  result = sheets_service.create_spreadsheet(spreadsheet)
+  puts JSON.pretty_generate(result.to_h)
+
+  spreadsheet_id = result.spreadsheet_id
+
+  # Add permissions (if given)
+  permissions.each do |premission|
+    result = drive_service.create_permission(spreadsheet_id, premission, fields: '*', supports_all_drives: true)
+    puts JSON.pretty_generate(result.to_h)
+  end
+
+  if options.folder_id
+    # Move the spreadsheet to the specified folder
+    file = drive_service.get_file(spreadsheet_id, fields: 'parents')
+
+    remove_parents = file.parents.join(',')
+    add_parents = [options.folder_id]
+    fields = 'id, parents'
+
+    result = drive_service.update_file(spreadsheet_id, add_parents:, remove_parents:, fields:, supports_all_drives: true)
+    puts JSON.pretty_generate(result.to_h)
+  end
+rescue Google::Apis::Error => e
+  puts "An error occurred: #{e}"
+end
