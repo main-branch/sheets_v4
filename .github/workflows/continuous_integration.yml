@@ -1,0 +1,73 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+# Supported platforms / Ruby versions:
+#  - Ubuntu: MRI (3.1, 3.2, 3.3), TruffleRuby (24), JRuby (9.4)
+#  - Windows: MRI (3.1), JRuby (9.4)
+
+jobs:
+  build:
+    name: Ruby ${{ matrix.ruby }} on ${{ matrix.operating-system }}
+
+    runs-on: ${{ matrix.operating-system }}
+    continue-on-error: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["3.1", "3.2", "3.3", "jruby-9.4", "truffleruby-24"]
+        operating-system: [ubuntu-latest]
+        include:
+          - ruby: "3.1"
+            operating-system: windows-latest
+          - ruby: "jruby-9.4"
+            operating-system: windows-latest
+
+    env:
+      JAVA_OPTS: -Djdk.io.File.enableADS=true
+      JRUBY_OPTS: --debug
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run rake
+        run: bundle exec rake
+
+  coverage:
+    name: Report test coverage to CodeClimate
+
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+          bundler-cache: true
+
+      - name: Report test coverage
+        uses: paambaati/codeclimate-action@v9
+        env:
+          CC_TEST_REPORTER_ID: b79e3e5c15467ab7753d3dfbe521e07d79f8e1af50e52428f0281e4f8c4ed3b8
+        with:
+          coverageCommand: bundle exec rake spec
+          coverageLocations: ${{github.workspace}}/coverage/lcov/*.lcov:lcov
