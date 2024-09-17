@@ -1,4 +1,3 @@
-# Copyright (c) 2022 Yahoo
 # frozen_string_literal: true
 
 require 'google/apis/sheets_v4'

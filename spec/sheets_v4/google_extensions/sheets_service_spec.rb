@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# Copyright (c) 2022 Yahoo
-
 require 'sheets_v4/google_extensions'
 
 RSpec.describe SheetsV4::GoogleExtensions::SheetsService do

@@ -141,13 +141,13 @@ module SheetsV4
       malibu_tint: { red: 0.96862745098, green: 0.68235294118, blue: 0.80000000000 },
       sea_foam_tint: { red: 0.74901960784, green: 0.92549019608, blue: 0.92156862745 },
 
-      # Yahoo health colors
+      # Health colors
       #
       health_green: { red: 0.00000000000, green: 0.69019607843, blue: 0.31372549020 },
       health_yellow: { red: 1.00000000000, green: 0.65490196078, blue: 0.00000000000 },
       health_red: { red: 1.00000000000, green: 0.00000000000, blue: 0.00000000000 },
 
-      # Yahoo Fuji design color palette
+      # Fuji design color palette
       #
       fuji_color_watermelon: { red: 1.00000000000, green: 0.32156862745, blue: 0.34117647059 },
       fuji_color_solo_cup: { red: 0.92156862745, green: 0.05882352941, blue: 0.16078431373 },
