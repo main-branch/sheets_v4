@@ -6,6 +6,7 @@
 [![Build Status](https://github.com/main-branch/sheets_v4/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/main-branch/sheets_v4/actions/workflows/continuous_integration.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/maintainability)](https://codeclimate.com/github/main-branch/sheets_v4/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/test_coverage)](https://codeclimate.com/github/main-branch/sheets_v4/test_coverage)
+[![Slack](https://img.shields.io/badge/slack-main--branch/sheets__v4-yellow.svg?logo=slack)](https://main-branch.slack.com/archives/C07N5ULJQU9)
 
 Unofficial helpers and extensions for the Google Sheets V4 API
 
