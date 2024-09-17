@@ -10,16 +10,18 @@ Gem::Specification.new do |spec|
 
   spec.summary = 'Unofficial helpers and extensions for the Google Sheets V4 API'
   spec.description = spec.summary
-  spec.homepage = 'https://github.com/main-branch/sheets_v4'
   spec.license = 'MIT'
   spec.required_ruby_version = '>= 3.1.0'
 
   spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
+  # Project links
+  spec.homepage = "https://github.com/main-branch/#{spec.name}"
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = spec.homepage
-  spec.metadata['changelog_uri'] = 'https://rubydoc.info/gems/sheets_v4/file/CHANGELOG.md'
+  spec.metadata['documentation_uri'] = "https://rubydoc.info/gems/#{spec.name}/#{spec.version}"
+  spec.metadata['changelog_uri'] = "https://rubydoc.info/gems/#{spec.name}/#{spec.version}/file/CHANGELOG.md"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
