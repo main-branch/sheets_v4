@@ -4,6 +4,33 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## v0.10.0 (2024-10-11)
+
+[Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.9.0..v0.10.0)
+
+Changes since v0.9.0:
+
+* 96d390e build: remove semver pr label check
+* 54149ee build: enforce conventional commit message formatting
+* 29ef270 Use shared Rubocop config
+* 39a926d Update copyright notice in this project
+* f4be18a Update links in gemspec
+* 9c6eae1 Add Slack badge for this project in README
+* eae2952 Update yardopts with new standard options
+* 24d501c Use standard badges at the top of the README
+* 0fb15d3 Standardize YARD and Markdown Lint configurations
+* 07db14a Set JRuby --debug option when running tests in GitHub Actions workflows
+* fe810d9 Integrate simplecov-rspec into the project
+* 256ac35 Update continuous integration and experimental ruby builds
+* 3f58109 Enforce the use of semver tags on PRs
+* 9be5038 Auto correct Rubocop Gemspec/AddRuntimeDependency offenses
+* c800d10 Add links to other gems in the Google API helpers series (#35)
+* 207c4d6 Reformat examples/README.md (#34)
+* 18b4d9b Move api_object_validation to the discovery_v1 gem (#33)
+* cc48f8c Review and update documentation (#32)
+* 2f2c8e2 Remove code for no longer used validate_api_object (#31)
+* e566cfe Reformat examples (#30)
+
 ## v0.9.0 (2023-10-16)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.8.0..v0.9.0)
