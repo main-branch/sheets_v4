@@ -14,3 +14,6 @@
 /rspec-report.xml
 /rubocop-report.json
 /sig
+
+node_modules
+package-lock.json
