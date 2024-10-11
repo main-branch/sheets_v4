@@ -6,6 +6,8 @@
 [![Build Status](https://github.com/main-branch/sheets_v4/actions/workflows/continuous_integration.yml/badge.svg)](https://github.com/main-branch/sheets_v4/actions/workflows/continuous_integration.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/maintainability)](https://codeclimate.com/github/main-branch/sheets_v4/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aeebc016487c5cad881e/test_coverage)](https://codeclimate.com/github/main-branch/sheets_v4/test_coverage)
+[![Conventional
+Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 [![Slack](https://img.shields.io/badge/slack-main--branch/sheets__v4-yellow.svg?logo=slack)](https://main-branch.slack.com/archives/C07N5ULJQU9)
 
 Unofficial helpers and extensions for the Google Sheets V4 API
@@ -45,6 +47,8 @@ Gems in the Google API helper, extensions, and examples series:
   * [Working with colors](#working-with-colors)
 * [Development](#development)
 * [Contributing](#contributing)
+  * [Commit message guidelines](#commit-message-guidelines)
+  * [Pull request guidelines](#pull-request-guidelines)
 * [License](#license)
 
 ## Installation
@@ -451,6 +455,31 @@ commits and the created tag, and push the `.gem` file to
 ## Contributing
 
 Bug reports and pull requests are welcome on [the main-branch/sheets_v4 GitHub project](https://github.com/main-branch/sheets_v4).
+
+### Commit message guidelines
+
+All commit messages must follow the [Conventional Commits
+standard](https://www.conventionalcommits.org/en/v1.0.0/). This helps us maintain a
+clear and structured commit history, automate versioning, and generate changelogs
+effectively.
+
+To ensure compliance, this project includes:
+
+* A git commit-msg hook that validates your commit messages before they are accepted.
+
+  To activate the hook, you must have node installed and run `npm install`.
+
+* A GitHub Actions workflow that will enforce the Conventional Commit standard as
+  part of the continuous integration pipeline.
+
+  Any commit message that does not conform to the Conventional Commits standard will
+  cause the workflow to fail and not allow the PR to be merged.
+
+### Pull request guidelines
+
+All pull requests must be merged using rebase merges. This ensures that commit
+messages from the feature branch are preserved in the release branch, keeping the
+history clean and meaningful.
 
 ## License
 
