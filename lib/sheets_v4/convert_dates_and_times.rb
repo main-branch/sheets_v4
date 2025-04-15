@@ -180,6 +180,7 @@ module SheetsV4
     # @return [Integer] number of seconds in a day
     #
     SECONDS_PER_DAY = 86_400
+    private_constant :SECONDS_PER_DAY
 
     # The number of seconds between the Google Sheets Epoch and Unix Epoch
     #
@@ -189,6 +190,7 @@ module SheetsV4
     # @return [Integer] the number of seconds
     #
     SECONDS_BETWEEN_GS_AND_UNIX_EPOCHS = 25_569 * 86_400
+    private_constant :SECONDS_BETWEEN_GS_AND_UNIX_EPOCHS
 
     # Convert a gs_datetime to unix time
     #
