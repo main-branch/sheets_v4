@@ -62,4 +62,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'googleauth'
   spec.add_dependency 'json_schemer', '~> 2.0'
   spec.add_dependency 'rltk', '~> 3.0'
+
+  if Gem.win_platform?
+    # tzinfo-data contains the timezone definitions needed by the tzinfo gem
+    # specifically on Windows, as Windows lacks a system-wide timezone database
+    # commonly found on Linux/macOS.
+    spec.add_dependency 'tzinfo-data', '>= 1.2016.6' # Use an appropriate version constraint
+  end
 end
