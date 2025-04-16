@@ -4,6 +4,14 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## [0.10.1](https://github.com/main-branch/sheets_v4/compare/v0.10.0...v0.10.1) (2025-04-16)
+
+
+### Bug Fixes
+
+* Automate commit-to-publish workflow ([22e4653](https://github.com/main-branch/sheets_v4/commit/22e4653cc0699225951c1b85bae101677f3dfc04))
+* Correctly mark constants as private ([3a7a35e](https://github.com/main-branch/sheets_v4/commit/3a7a35e94fec40759c995c24a7a93085407ee415))
+
 ## v0.10.0 (2024-10-11)
 
 [Full Changelog](https://github.com/main-branch/sheets_v4/compare/v0.9.0..v0.10.0)
