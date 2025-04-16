@@ -1,0 +1,22 @@
+{
+  "bootstrap-sha": "fd7d9e1b7ebd09c404929cf9ff1dd6a38498f669",
+  "packages": {
+    ".": {
+      "release-type": "ruby",
+      "package-name": "sheets_v4",
+      "changelog-path": "CHANGELOG.md",
+      "version-file": "lib/sheets_v4/version.rb",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "prerelease": false,
+      "include-component-in-tag": false
+    }
+  },
+  "plugins": [
+    {
+      "type": "sentence-case"
+    }
+  ],
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
+}
