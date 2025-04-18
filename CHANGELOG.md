@@ -4,6 +4,13 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## [0.10.3](https://github.com/main-branch/sheets_v4/compare/v0.10.2...v0.10.3) (2025-04-18)
+
+
+### Other Changes
+
+* Configure release-please to includes all changes in the CHANGELOG ([7e943c4](https://github.com/main-branch/sheets_v4/commit/7e943c46fb851b15418ca3f95844bdc25424ad99))
+
 ## [0.10.2](https://github.com/main-branch/sheets_v4/compare/v0.10.1...v0.10.2) (2025-04-17)
 
 
