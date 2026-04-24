@@ -4,6 +4,14 @@ Changes for each release are listed in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/) for its releases.
 
+## [0.10.4](https://github.com/main-branch/sheets_v4/compare/v0.10.3...v0.10.4) (2026-04-24)
+
+
+### Other Changes
+
+* **dependencies:** Update dependencies for the GitHub Actions workflows ([b1cac07](https://github.com/main-branch/sheets_v4/commit/b1cac07dd69c5db943baa453cb2377312877a481))
+* **rubocop:** Fix offenses from new RuboCop cops ([fb883d6](https://github.com/main-branch/sheets_v4/commit/fb883d6eedbc3a4b6b314c5571bd701b60b10674))
+
 ## [0.10.3](https://github.com/main-branch/sheets_v4/compare/v0.10.2...v0.10.3) (2025-04-18)
 
 
