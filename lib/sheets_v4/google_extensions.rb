@@ -19,7 +19,8 @@ require_relative 'google_extensions/spreadsheet'
 require_relative 'google_extensions/sheet'
 
 # @private
-module Google
+
+module Google # rubocop:disable Style/OneClassPerFile
   module Apis
     # Add SheetsV4 extensions to Google::Apis::SheetsV4 classes
     module SheetsV4
